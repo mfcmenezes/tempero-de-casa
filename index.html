@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tempero de Casa — receitas do dia a dia</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFF8F4">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#EF7E7E;--leafc:#75A658;--sun:#FFC854;--apricot:#FFA654;--rose:#E59484;
+--bg:#FFF8F4;--card:#fff;--ink:#2E1A17;--soft:#7A625D;--line:#F1DFD8;
+--leaf:#B8474A;--leaf2:#8E3236;--lemon:var(--sun);--berry:#B8474A;
+--serif:'Playfair Display',Georgia,'Times New Roman',serif;--sans:'Poppins',-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:#F6E3DC;font-family:var(--sans);color:var(--ink);display:flex;align-items:center;justify-content:center}
+#phone{width:390px;height:780px;max-height:100vh;background:var(--bg);border-radius:34px;box-shadow:0 24px 60px rgba(120,50,40,.28);display:flex;flex-direction:column;overflow:hidden;position:relative;border:8px solid #2E1A17}
+@media(max-width:480px){body{background:var(--bg)}#phone{width:100%;height:100%;max-height:none;border-radius:0;border:0;box-shadow:none}}
+header{background:var(--bg);color:var(--ink);padding:14px 18px 10px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
+.logo{font-family:var(--serif);font-style:italic;font-size:23px;font-weight:600;display:flex;align-items:center;gap:9px;user-select:none;-webkit-user-select:none;cursor:default;color:var(--leaf)}
+.logo i{font-style:normal;background:var(--sun);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:16px}
+main{flex:1;overflow-y:auto;padding:6px 18px 22px}
+h2{font-family:var(--serif);font-size:24px;font-weight:600;margin:0 0 12px;line-height:1.15}
+h3{font-family:var(--serif);font-style:italic;font-weight:600;font-size:19px;margin:22px 0 10px}
+nav{flex:0 0 auto;display:flex;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0)}
+nav button{flex:1;border:0;background:none;padding:9px 2px 10px;font:inherit;font-size:11px;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav button b{font-size:19px;font-weight:400;width:40px;height:28px;border-radius:99px;display:grid;place-items:center}
+nav button.on{color:var(--leaf);font-weight:600}
+nav button.on b{background:#FDE3E0}
+input,textarea,select{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+input:focus,textarea:focus,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 16px;scrollbar-width:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* capa da tela inicial */
+.hero{position:relative;background:var(--sun);border-radius:26px;padding:22px 20px 20px;margin:4px 0 14px;overflow:hidden}
+.hero h1{font-family:var(--serif);font-style:italic;font-weight:700;font-size:34px;line-height:1.02;margin:0;max-width:78%;letter-spacing:-.01em}
+.hero p{margin:10px 0 0;font-size:13px;max-width:62%;line-height:1.45}
+.hero .hp{position:absolute;right:-18px;bottom:-22px;width:118px;height:118px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:58px;box-shadow:0 0 0 10px rgba(255,255,255,.45)}
+.search{border-radius:99px;padding-left:18px}
+/* grade de receitas: prato redondo em fundo da cor da categoria */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{position:relative;background:var(--t);border-radius:22px;padding:16px 12px 14px;cursor:pointer;text-align:center}
+.card .plate{width:84px;height:84px;margin:4px auto 10px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:44px;box-shadow:0 6px 14px rgba(90,40,30,.12)}
+.card b{display:block;font-family:var(--serif);font-weight:600;font-size:15.5px;line-height:1.2}
+.card small{display:block;color:var(--soft);font-size:12px;margin-top:4px}
+.card .heart{position:absolute;top:8px;right:8px}
+.heart{border:0;background:rgba(255,255,255,.75);width:32px;height:32px;border-radius:50%;font-size:17px;cursor:pointer;color:var(--leaf);display:grid;place-items:center}
+.empty{color:var(--soft);font-size:14px;line-height:1.5}
+/* receita aberta: página de livro de receitas */
+.spread{margin:-6px -18px 0}
+.cover{background:var(--c);padding:10px 20px 70px;position:relative}
+.cover .back{padding:6px 0 18px;color:var(--ink)}
+.cover .cat{font-size:12px;font-weight:600;background:rgba(255,255,255,.55);padding:4px 11px;border-radius:99px}
+.cover h1{font-family:var(--serif);font-style:italic;font-weight:700;font-size:40px;line-height:1;margin:14px 0 0;max-width:88%;letter-spacing:-.015em}
+.cover .plate{position:absolute;right:22px;bottom:-46px;width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:60px;box-shadow:0 10px 24px rgba(90,40,30,.2)}
+.paper{padding:18px 20px 10px}
+.meta{display:flex;gap:16px;font-size:13px;color:var(--soft);min-height:40px;align-items:center}
+.meta b{color:var(--ink);font-weight:600}
+.ing{list-style:none;padding:0;columns:2;column-gap:16px}
+.ing li{break-inside:avoid;padding:0 0 8px 16px;position:relative;font-size:14px;line-height:1.4}
+.ing li::before{content:'';position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--c)}
+.steps{list-style:none;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:4px;font-size:14.5px;line-height:1.55;margin-bottom:12px}
+.steps li::before{content:counter(s);font-family:var(--serif);font-style:italic;font-weight:700;font-size:24px;line-height:1.1;color:var(--leaf)}
+/* peças reaproveitadas no perfil e na ajuda */
+.rec{display:flex;gap:12px;background:var(--card);border-radius:18px;padding:12px;margin-bottom:10px;border:1px solid var(--line);align-items:center;width:100%;text-align:left;font:inherit;color:inherit}
+.emo{font-size:30px;width:54px;height:54px;border-radius:50%;background:#FDE3E0;display:grid;place-items:center;flex:0 0 auto}
+.rec b{display:block;font-weight:600;font-size:15px}
+.rec small{color:var(--soft);font-size:12.5px}
+.btn{border:0;background:var(--leaf);color:#fff;font:inherit;font-weight:600;padding:13px 18px;border-radius:99px;cursor:pointer;font-size:15px;width:100%}
+.btn.alt{background:#fff;color:var(--leaf);border:1.5px solid var(--leaf)}
+.btn.red{background:var(--berry)}
+.btn:disabled{opacity:.5}
+.back{border:0;background:none;color:var(--leaf);font:inherit;font-size:14px;font-weight:500;padding:0 0 10px;cursor:pointer}
+ol,ul{padding-left:20px;line-height:1.55;margin:0}
+li{margin-bottom:5px}
+.row{display:flex;gap:10px}
+.lab{font-size:13px;font-weight:600;margin:14px 0 6px;display:block}
+/* cofre: mesma família visual, em verde e marrom */
+.vault header{background:var(--ink);color:#fff}
+.vault .logo{color:#fff;font-style:normal;font-family:var(--sans);font-size:18px}
+.vault{--leaf:#4E7A3A;--leaf2:#34512A}
+.vault .logo i{background:var(--leafc)}
+.vault nav button.on b{background:#E3EFDB}
+.note{background:#EEF5E9;border-radius:14px;padding:11px 13px;font-size:12.5px;color:#34512A;line-height:1.5;margin-bottom:12px}
+.ev{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:10px}
+.ev small{color:var(--soft);font-size:12px;display:block;margin-bottom:4px}
+.ev img,.ev video{width:100%;border-radius:8px;margin-top:6px;max-height:260px;object-fit:cover}
+.ev audio{width:100%;margin-top:6px}
+.ev p{margin:4px 0 0;white-space:pre-wrap;line-height:1.45;font-size:14.5px}
+.del{border:0;background:none;color:var(--berry);font:inherit;font-size:12.5px;padding:6px 0 0;cursor:pointer;text-decoration:underline}
+.pin{display:flex;flex-direction:column;align-items:center;padding-top:30px;text-align:center}
+.dots{display:flex;gap:14px;margin:18px 0 22px}
+.dots span{width:15px;height:15px;border-radius:50%;border:2px solid var(--leaf)}
+.dots span.f{background:var(--leaf)}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
+.pad button{height:60px;border-radius:50%;border:1px solid var(--line);background:#fff;font:inherit;font-size:22px;cursor:pointer}
+.err{color:var(--berry);font-size:13.5px;min-height:20px}
+.rec-btn{width:96px;height:96px;border-radius:50%;border:0;background:var(--berry);color:#fff;font-size:34px;margin:14px auto;display:block;cursor:pointer}
+.rec-btn.on{animation:p 1s infinite}
+@keyframes p{50%{transform:scale(1.08)}}
+@media(prefers-reduced-motion:reduce){.rec-btn.on{animation:none}}
+.exit{background:rgba(255,255,255,.16);border:0;color:#fff;font:inherit;font-size:13px;padding:7px 12px;border-radius:99px;cursor:pointer}
+#prt{display:none}@media print{#phone{display:none!important}#prt{display:block;font-family:Arial,sans-serif;color:#000}body{display:block;background:#fff;height:auto}html{height:auto}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.grid2 .btn{padding:10px 8px;font-size:13.5px}
+.tomb{background:#f3f1f5;color:var(--soft);font-size:13.5px}
+.link{border:0;background:none;color:var(--leaf);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;margin-top:16px}
+.dlg{position:absolute;inset:0;background:rgba(46,26,23,.45);display:flex;align-items:flex-end;justify-content:center;padding:16px;z-index:50}
+.dlg .box{background:#fff;border-radius:22px;padding:20px 18px 16px;width:100%;max-width:360px;box-shadow:0 12px 40px rgba(46,26,23,.3)}
+.dlg p{margin:0 0 16px;font-size:14.5px;line-height:1.5;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div id="phone"></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s), P=$('#phone');
+const REC=[
+{id:1,e:'🍝',n:'Macarrão ao alho e óleo',c:'Rápidas',t:20,i:['200 g de espaguete','4 dentes de alho','4 col. de azeite','Pimenta calabresa','Salsinha'],s:['Cozinhe o macarrão em água com sal.','Doure o alho fatiado no azeite em fogo baixo.','Misture o macarrão com um pouco da água do cozimento.','Finalize com salsinha e pimenta.']},
+{id:2,e:'🍲',n:'Feijão tropeiro',c:'Almoço',t:50,i:['3 xíc. de feijão cozido','200 g de bacon','3 ovos','1 xíc. de farinha de mandioca','Couve fatiada'],s:['Frite o bacon até dourar.','Junte os ovos e mexa até firmar.','Acrescente o feijão e a couve.','Adicione a farinha aos poucos e acerte o sal.']},
+{id:3,e:'🍰',n:'Bolo de cenoura',c:'Doces',t:55,i:['3 cenouras','3 ovos','1/2 xíc. de óleo','2 xíc. de açúcar','2 xíc. de farinha','1 col. de fermento'],s:['Bata no liquidificador a cenoura, os ovos e o óleo.','Misture com o açúcar e a farinha.','Acrescente o fermento e leve ao forno a 180 °C por 40 min.','Cubra com brigadeiro de panela.']},
+{id:4,e:'🥗',n:'Salada de grão-de-bico',c:'Rápidas',t:10,i:['1 lata de grão-de-bico','1 tomate','1/2 cebola roxa','Suco de 1 limão','Azeite e coentro'],s:['Escorra e lave o grão-de-bico.','Pique o tomate e a cebola.','Misture tudo com limão, azeite e coentro.']},
+{id:5,e:'🍗',n:'Frango assado com batatas',c:'Almoço',t:75,i:['1 kg de coxas de frango','4 batatas','4 dentes de alho','Páprica e sal','Alecrim'],s:['Tempere o frango e deixe descansar 30 min.','Disponha com as batatas em uma assadeira.','Asse a 200 °C por 45 min, virando na metade.']},
+{id:6,e:'🍮',n:'Pudim de leite',c:'Doces',t:90,i:['1 lata de leite condensado','2 latas de leite','3 ovos','1 xíc. de açúcar para a calda'],s:['Faça a calda com o açúcar e forre a forma.','Bata o restante no liquidificador e despeje.','Asse em banho-maria a 180 °C por 50 min.','Leve à geladeira por 4 horas.']}
+];
+const CATS=['Todas','Rápidas','Almoço','Doces'];
+REC.push({id:7,e:'🥞',n:'Panqueca de banana',c:'Rápidas',t:15,i:['1 banana','1 ovo','3 col. de aveia','Canela'],s:['Amasse a banana e misture o ovo e a aveia.','Doure colheradas em frigideira untada dos dois lados.','Sirva com canela.']},{id:8,e:'🍛',n:'Arroz de forno',c:'Almoço',t:45,i:['2 xíc. de arroz cozido','1 lata de milho','200 g de queijo','1 xíc. de molho de tomate'],s:['Misture o arroz, o milho e o molho.','Cubra com queijo.','Leve ao forno a 200 °C por 20 min.']},{id:9,e:'🍫',n:'Brigadeiro',c:'Doces',t:20,i:['1 lata de leite condensado','3 col. de chocolate em pó','1 col. de manteiga'],s:['Misture tudo na panela em fogo baixo.','Mexa até desgrudar do fundo.','Deixe esfriar e enrole em bolinhas.']});
+try{JSON.parse(localStorage.getItem('tc_rec')||'[]').forEach(r=>REC.push(r))}catch{}
+let S={tab:'rec',cat:'Todas',q:'',open:null,fav:JSON.parse(localStorage.getItem('tc_fav')||'[]'),vault:false,slot:0,pick:0,comp:null,vt:'reg',pin:null};
+
+/* --- banco local cifrado (AES-GCM) --- */
+let db,K;const te=new TextEncoder(),td=new TextDecoder();
+const idb=()=>new Promise((ok,no)=>{const r=indexedDB.open('tc_cache',1);r.onupgradeneeded=()=>{r.result.createObjectStore('ev',{keyPath:'id'});r.result.createObjectStore('m')};r.onsuccess=()=>{db=r.result;ok()};r.onerror=no});
+const tx=(st,m,f)=>new Promise((ok,no)=>{const t=db.transaction(st,m),q=f(t.objectStore(st));t.oncomplete=()=>ok(q&&q.result);t.onerror=no});
+const mget=k=>tx('m','readonly',s=>s.get(k)),mset=(k,v)=>tx('m','readwrite',s=>s.put(v,k)),mdel=k=>tx('m','readwrite',s=>s.delete(k));
+// grava registros e metadados na mesma transação: ou salva tudo, ou nada
+const txAll=f=>new Promise((ok,no)=>{const t=db.transaction(['ev','m'],'readwrite');f(t.objectStore('ev'),t.objectStore('m'));t.oncomplete=ok;t.onerror=no});
+const u8=a=>new Uint8Array(a);
+async function enc(bytes,key=K){const iv=crypto.getRandomValues(new Uint8Array(12));return{iv,ct:await crypto.subtle.encrypt({name:'AES-GCM',iv},key,bytes)}}
+const dec=(o,key=K)=>crypto.subtle.decrypt({name:'AES-GCM',iv:o.iv},key,o.ct);
+const encJ=(o,key=K)=>enc(te.encode(JSON.stringify(o)),key);
+const decJ=async(o,key=K)=>JSON.parse(td.decode(await dec(o,key)));
+async function derive(pw,salt){const b=await crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},b,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+const hex=b=>[...u8(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+const sha=async b=>hex(await crypto.subtle.digest('SHA-256',b));
+const shaT=s=>sha(te.encode(s));
+const rnd=()=>hex(crypto.getRandomValues(new Uint8Array(24)));
+const ZERO='0'.repeat(64);
+
+/* --- dois espaços: 0 = verdadeiro, 1 = disfarce ---
+   Os dois sempre existem (o de disfarce começa com senha aleatória),
+   então olhando o aparelho não dá para saber se o disfarce foi configurado. */
+const VK=s=>s?'v1':'v';
+async function criarSlot(s,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),key=await derive(pw,salt);
+  const v={salt,chk:await enc(te.encode('ok'),key)},h=await encJ({seq:0,link:ZERO},key);
+  await txAll((se,sm)=>{sm.put(v,VK(s));sm.put(h,'h'+s);sm.delete('c'+s)});return key}
+async function limparDisfarce(){const r=await tx('ev','readonly',s=>s.getAll()),del=[];
+  for(const x of r){try{await dec(x.m)}catch{del.push(x.id)}}
+  await tx('ev','readwrite',s=>{del.forEach(id=>s.delete(id))})}
+
+/* --- corrente de registros (cada um guarda o código do anterior) --- */
+const linkOf=e=>shaT([e.seq,e.prev,e.sha,e.criado,e.tipo,e.quando].join('|'));
+async function getHead(){const h=await mget('h'+S.slot);return h?await decJ(h):{seq:0,link:ZERO}}
+async function getComps(){const c=await mget('c'+S.slot);return c?await decJ(c):[]}
+async function addComp(c){const l=await getComps();l.push(c);await mset('c'+S.slot,await encJ(l))}
+let FILA=Promise.resolve();const serial=f=>(FILA=FILA.then(f,f));
+const addEv=o=>serial(async()=>{const {blob,...meta}=o;const buf=blob?await blob.arrayBuffer():te.encode(meta.texto||'');
+  meta.sha=await sha(buf);meta.criado=new Date().toISOString();meta.n=buf.byteLength;
+  if(blob)meta.exif=exifDate(buf);
+  const h=await getHead();meta.seq=h.seq+1;meta.prev=h.link;meta.link=await linkOf(meta);
+  const m=await encJ(meta),b=blob?await enc(buf):null,hh=await encJ({seq:meta.seq,link:meta.link}),id=Date.now()+Math.random();
+  await txAll((se,sm)=>{se.put({id,m,b});sm.put(hh,'h'+S.slot)})});
+const allEv=async()=>{const r=await tx('ev','readonly',s=>s.getAll()),l=[];
+  for(const x of r){try{const e=await decJ(x.m);e.id=x.id;e._b=x.b;l.push(e)}catch{}}
+  return l.sort((a,b)=>new Date(b.quando)-new Date(a.quando))};
+const blobOf=async e=>new Blob([await dec(e._b)],{type:e.mime});
+// apagar remove o conteúdo, mas deixa um aviso na corrente para ela continuar íntegra
+const delEv=e=>serial(async()=>{if(!e.seq)return tx('ev','readwrite',s=>s.delete(e.id));
+  const t={seq:e.seq,prev:e.prev,link:e.link,sha:e.sha,criado:e.criado,tipo:e.tipo,quando:e.quando,apagado:new Date().toISOString()};
+  const m=await encJ(t);await tx('ev','readwrite',s=>s.put({id:e.id,m,b:null}))});
+// registros antigos, feitos antes da corrente existir, entram nela em ordem de criação
+async function ensureChain(){if(await mget('h'+S.slot))return;const r=await tx('ev','readonly',s=>s.getAll()),l=[];
+  for(const x of r){try{l.push({x,e:await decJ(x.m)})}catch{}}
+  l.sort((a,b)=>new Date(a.e.criado)-new Date(b.e.criado));let prev=ZERO,seq=0;const out=[];
+  for(const {x,e} of l){e.seq=++seq;e.prev=prev;e.link=await linkOf(e);prev=e.link;out.push({id:x.id,m:await encJ(e),b:x.b})}
+  const hh=await encJ({seq,link:prev});await txAll((se,sm)=>{out.forEach(o=>se.put(o));sm.put(hh,'h'+S.slot)})}
+async function verificar(l){const c=l.filter(e=>e.seq).sort((a,b)=>a.seq-b.seq),pb=[];let prev=ZERO,exp=1;
+  for(const e of c){
+    if(e.seq>exp)pb.push(e.seq-1>exp?`Faltam os registros nº ${exp} a ${e.seq-1}.`:`Falta o registro nº ${exp}.`);
+    else if(e.seq<exp)pb.push(`O registro nº ${e.seq} aparece repetido.`);
+    else if(e.prev!==prev)pb.push(`O registro nº ${e.seq} não se encaixa no anterior.`);
+    if(await linkOf(e)!==e.link)pb.push(`Os dados do registro nº ${e.seq} foram alterados.`);
+    else if(!e.apagado){const buf=e._b?await dec(e._b):te.encode(e.texto||'');if(await sha(buf)!==e.sha)pb.push(`O conteúdo do registro nº ${e.seq} foi alterado.`)}
+    prev=e.link;exp=e.seq+1}
+  const h=await getHead();if(h.seq!==exp-1||h.link!==prev)pb.push('Os registros mais recentes não conferem com o último código salvo: algo pode ter sido removido.');
+  for(const k of await getComps()){const e=c.find(x=>x.seq===k.seq);if(!e||e.link!==k.link)pb.push(`O comprovante de ${fmt(k.em)} não confere com o registro nº ${k.seq}.`)}
+  return{ok:!pb.length,n:c.length,pb}}
+
+/* --- data original da foto (EXIF de arquivos JPEG) --- */
+function exifDate(buf){try{const d=new DataView(buf);if(d.byteLength<4||d.getUint16(0)!==0xFFD8)return null;let o=2;
+  while(o+10<d.byteLength){const mk=d.getUint16(o),len=d.getUint16(o+2);if((mk&0xFF00)!==0xFF00||mk===0xFFDA)break;
+    if(mk===0xFFE1&&d.getUint32(o+4)===0x45786966){const t=o+10,le=d.getUint16(t)===0x4949,g16=p=>d.getUint16(p,le),g32=p=>d.getUint32(p,le);
+      const find=(p,tag)=>{const n=g16(p);for(let i=0;i<n;i++){const e=p+2+i*12;if(g16(e)===tag)return e}return 0};
+      const str=e=>{const c=g32(e+4),off=c>4?t+g32(e+8):e+8;let s='';for(let i=0;i<c-1;i++)s+=String.fromCharCode(d.getUint8(off+i));return s};
+      const i0=t+g32(t+4),ep=find(i0,0x8769);let v=null;
+      if(ep){const eo=find(t+g32(ep+8),0x9003);if(eo)v=str(eo)}
+      if(!v){const e2=find(i0,0x0132);if(e2)v=str(e2)}
+      const m=v&&v.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})/);return m&&m[1]!=='0000'?`${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`:null}
+    o+=2+len}}catch{}return null}
+
+let URLS=[];const rev=()=>{URLS.forEach(u=>URL.revokeObjectURL(u));URLS=[]};
+const fmt=d=>new Date(d).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nowLocal=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
+const geo=()=>new Promise(ok=>navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>ok({lat:+p.coords.latitude.toFixed(5),lon:+p.coords.longitude.toFixed(5)}),()=>ok(null),{timeout:6000}):ok(null));
+
+/* --- backup: converte bytes em texto (base64) e volta --- */
+const b64=b=>{const a=b instanceof ArrayBuffer?new Uint8Array(b):new Uint8Array(b.buffer,b.byteOffset,b.byteLength);let s='';for(let i=0;i<a.length;i+=0x8000)s+=String.fromCharCode.apply(null,a.subarray(i,i+0x8000));return btoa(s)};
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const ser=o=>o instanceof ArrayBuffer||ArrayBuffer.isView(o)?{$b:b64(o)}:Array.isArray(o)?o.map(ser):o&&typeof o==='object'?Object.fromEntries(Object.entries(o).map(([k,v])=>[k,ser(v)])):o;
+const deser=o=>!o||typeof o!=='object'?o:Array.isArray(o)?o.map(deser):typeof o.$b==='string'?unb64(o.$b):Object.fromEntries(Object.entries(o).map(([k,v])=>[k,deser(v)]));
+
+/* --- janelas de aviso dentro do app (alert/confirm do navegador são bloqueados em alguns lugares) --- */
+function dlg(msg,ok,cancel){return new Promise(res=>{const d=document.createElement('div');d.className='dlg';
+  d.innerHTML=`<div class="box" role="alertdialog" aria-modal="true"><p></p><div class="row">${cancel?'<button class="btn alt" data-x="0"></button>':''}<button class="btn" data-x="1"></button></div></div>`;
+  d.querySelector('p').textContent=msg;d.querySelector('[data-x="1"]').textContent=ok;if(cancel)d.querySelector('[data-x="0"]').textContent=cancel;
+  d.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{d.remove();res(b.dataset.x==='1')});
+  P.appendChild(d);d.querySelector(cancel?'[data-x="0"]':'[data-x="1"]').focus()})}
+const aviso=m=>dlg(m,'Ok'),confirmar=(m,ok='Confirmar')=>dlg(m,ok,'Cancelar');
+/* --- app de receitas (fachada) --- */
+const CORES={Rápidas:['#FFA654','#FFE6CC'],Almoço:['#75A658','#E1EDD7'],Doces:['#E59484','#FADFD9']},cor=c=>CORES[c]||['#EF7E7E','#FDE3E0'];
+function shell(body,tab){
+  return `<header><div class="logo" id="logo"><i>🍋</i>Tempero de Casa</div></header><main>${body}</main>
+  <nav>${[['rec','🍳','Receitas'],['fav','♡','Favoritas'],['perf','👤','Perfil']].map(([k,i,l])=>`<button data-t="${k}" class="${tab===k?'on':''}"><b>${i}</b>${l}</button>`).join('')}</nav>`}
+function listaRec(l,vazio){return l.length?`<div class="grid">${l.map(r=>`<div class="card" data-r="${r.id}" role="button" tabindex="0" style="--t:${cor(r.c)[1]}"><button class="heart" data-f="${r.id}" aria-label="${S.fav.includes(r.id)?'Tirar dos favoritos':'Favoritar'}">${S.fav.includes(r.id)?'♥':'♡'}</button><span class="plate">${r.e}</span><b>${r.n}</b><small>${r.t} min</small></div>`).join('')}</div>`:`<p class="empty">${vazio||'Nenhuma receita com esse nome. Tente outra palavra ou escolha “Todas”.'}</p>`}
+function viewApp(){
+  let b,t=S.tab;
+  if(S.open){const r=REC.find(x=>x.id===S.open),[c]=cor(r.c);
+    b=`<article class="spread" style="--c:${c}"><div class="cover"><button class="back" id="bk">← Receitas</button><br><span class="cat">${r.c}</span><h1>${r.n}</h1><span class="plate">${r.e}</span></div><div class="paper"><div class="meta"><span><b>${r.t}</b> min</span><span><b>${r.i.length}</b> ingredientes</span></div><h3>Ingredientes</h3><ul class="ing">${r.i.map(x=>`<li>${x}</li>`).join('')}</ul><h3>Modo de preparo</h3><ol class="steps">${r.s.map(x=>`<li><span>${x}</span></li>`).join('')}</ol></div></article>`}
+  else if(t==='rec'){const l=REC.filter(r=>(S.cat==='Todas'||r.c===S.cat)&&r.n.toLowerCase().includes(S.q.toLowerCase()));
+    b=`<section class="hero"><h1>O que vamos cozinhar hoje?</h1><p>Receitas simples, com o que já tem em casa.</p><span class="hp" aria-hidden="true">🍲</span></section><input id="q" class="search" placeholder="Buscar receita" value="${esc(S.q)}"><div class="chips">${CATS.map(c=>`<button class="chip ${S.cat===c?'on':''}" data-c="${c}">${c}</button>`).join('')}</div>${listaRec(l)}`}
+  else if(t==='fav'){b=`<h2 style="margin-top:8px">Favoritas</h2>${listaRec(REC.filter(r=>S.fav.includes(r.id)),'Toque no ♡ de uma receita para guardá-la aqui.')}`}
+  else b=`<h2 style="margin-top:8px">Perfil</h2><div class="rec"><span class="emo">👩‍🍳</span><span><b>Cozinheira da casa</b><small>${S.fav.length} receita(s) favorita(s)</small></span></div><h3>Nova receita</h3><input id="nn" placeholder="Nome da receita"><label class="lab">Categoria</label><select id="nc"><option>Rápidas</option><option>Almoço</option><option>Doces</option></select><label class="lab">Tempo (min)</label><input id="nt" type="number" min="1" value="30"><label class="lab">Ingredientes (um por linha)</label><textarea id="ni"></textarea><label class="lab">Modo de preparo (um passo por linha)</label><textarea id="ns"></textarea><p><button class="btn" id="nr">Salvar receita</button></p><h3>Sobre</h3><p style="color:var(--soft);line-height:1.55;font-size:13.5px">Tempero de Casa reúne receitas simples para o dia a dia. Versão 2.5.0</p>`;
+  P.className='';P.innerHTML=shell(b,t);bindApp();
+}
+function bindApp(){
+  P.querySelectorAll('nav button').forEach(x=>x.onclick=()=>{S.tab=x.dataset.t;S.open=null;viewApp()});
+  P.querySelectorAll('[data-r]').forEach(x=>x.onclick=e=>{if(e.target.closest('.heart'))return;S.open=+x.dataset.r;viewApp()});
+  P.querySelectorAll('[data-r]').forEach(x=>x.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.heart')){e.preventDefault();x.click()}});
+  $('main').scrollTop=0;
+  P.querySelectorAll('[data-f]').forEach(x=>x.onclick=()=>{const id=+x.dataset.f;S.fav=S.fav.includes(id)?S.fav.filter(y=>y!==id):[...S.fav,id];localStorage.setItem('tc_fav',JSON.stringify(S.fav));viewApp()});
+  P.querySelectorAll('[data-c]').forEach(x=>x.onclick=()=>{S.cat=x.dataset.c;viewApp()});
+  const nr=$('#nr');if(nr)nr.onclick=()=>{const n=$('#nn').value.trim(),ii=$('#ni').value.split('\n').filter(Boolean),ss=$('#ns').value.split('\n').filter(Boolean);if(!n||!ii.length||!ss.length)return aviso('Preencha nome, ingredientes e preparo.');const c=JSON.parse(localStorage.getItem('tc_rec')||'[]'),r={id:Date.now(),e:'🍽️',n:esc(n),c:$('#nc').value,t:+$('#nt').value||30,i:ii.map(esc),s:ss.map(esc)};c.push(r);localStorage.setItem('tc_rec',JSON.stringify(c));REC.push(r);S.tab='rec';viewApp()};
+  const bk=$('#bk');if(bk)bk.onclick=()=>{S.open=null;viewApp()};
+  const q=$('#q');if(q)q.oninput=()=>{S.q=q.value;const p=q.selectionStart;viewApp();const n=$('#q');n.focus();n.setSelectionRange(p,p)};
+  // acesso secreto: segurar o logotipo por 1,5 s
+  const lg=$('#logo');let tm;const st=()=>{tm=setTimeout(()=>{pinScreen()},1500)},en=()=>clearTimeout(tm);
+  ['pointerdown'].forEach(e=>lg.addEventListener(e,st));['pointerup','pointerleave','pointercancel'].forEach(e=>lg.addEventListener(e,en));
+  lg.oncontextmenu=e=>e.preventDefault();
+}
+
+/* --- senha --- */
+async function pinScreen(){const m=await mget('v');S.pin={buf:'',step:m?'entrar':'criar',first:'',msg:''};drawPin()}
+function drawPin(){
+  const p=S.pin,tit={entrar:'Digite sua senha',criar:'Crie uma senha numérica (6 a 12 dígitos)',confirmar:'Repita a senha',dcriar:'Crie a senha de disfarce',dconfirmar:'Repita a senha de disfarce',tatual:'Digite a senha atual',tnova:'Digite a nova senha (6 a 12 dígitos)',tconfirmar:'Repita a nova senha'}[p.step];
+  const nota=p.step==='criar'?'Tudo é cifrado neste aparelho e só abre com a senha, que não pode ser recuperada. Se limpar os dados do navegador, os registros somem: faça backup cifrado ou envie cópias a alguém de confiança.':p.step==='dcriar'?'Use uma senha diferente da principal. Com ela, abre um espaço separado, que você pode mostrar se for obrigada a desbloquear.':p.step==='tnova'?'Os registros não se perdem: eles são cifrados de novo com a nova senha. Guarde-a bem, porque ela não pode ser recuperada.':'';
+  P.className='vault';
+  P.innerHTML=`<header><div class="logo"><i>🔒</i>Espaço seguro</div><button class="exit" id="x">Sair</button></header><main><div class="pin"><h2>${tit}</h2>${nota?`<div class="note" style="text-align:left">${nota}</div>`:''}<div class="dots">${[...p.buf].map(()=>'<span class="f"></span>').join('')||'<span></span>'}</div><div class="err" id="er">${p.msg}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(k=>`<button data-k="${k}">${k}</button>`).join('')}</div>${p.step==='criar'?'<button class="link" id="rst">Já tenho um backup: restaurar</button>':''}${/^[dt]/.test(p.step)&&!p.busy?'<button class="link" id="cn">Cancelar</button>':''}</div></main>`;
+  $('#x').onclick=sair;
+  P.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>pinKey(b.dataset.k));
+  if($('#rst'))$('#rst').onclick=escolherBackup;
+  if($('#cn'))$('#cn').onclick=()=>{S.pin=null;S.vt='aj';drawVault()};
+}
+async function pinKey(k){const p=S.pin;if(!p||p.busy)return;
+  if(k==='⌫')p.buf=p.buf.slice(0,-1);
+  else if(k!=='✓'){if(p.buf.length<12)p.buf+=k}
+  else if(p.buf.length<6){p.msg='Use ao menos 6 dígitos.'}
+  else{const pw=p.buf;p.buf='';p.msg='';
+    if(p.step[0]==='t'){
+      if(p.step==='tatual'){p.busy=1;p.msg='Verificando…';drawPin();const v=await mget(VK(S.slot));let ok=false;
+        try{await dec(v.chk,await derive(pw,v.salt));ok=true}catch{}p.busy=0;p.msg='';
+        if(!ok){p.msg='Senha atual incorreta.';return drawPin()}p.step='tnova'}
+      else if(p.step==='tnova'){
+        // só o espaço verdadeiro compara com a outra senha; no disfarce isso viraria um jeito de testar a senha verdadeira
+        if(S.slot===0){p.busy=1;p.msg='Verificando…';drawPin();const o=await mget('v1');let igual=false;
+          if(o)try{await dec(o.chk,await derive(pw,o.salt));igual=true}catch{}p.busy=0;p.msg='';
+          if(igual){p.msg='Essa é a senha de disfarce. Escolha outra.';return drawPin()}}
+        p.first=pw;p.step='tconfirmar'}
+      else if(pw!==p.first){p.step='tnova';p.msg='As senhas não conferem.'}
+      else{p.busy=1;p.msg='Trocando a senha… não feche o app.';drawPin();
+        try{await trocarSenha(pw)}catch{if(S.pin){p.busy=0;p.step='tatual';p.msg='Não foi possível trocar. A senha antiga continua valendo.';drawPin()}return}
+        if(S.vault){S.pin=null;S.vt='aj';await drawVault();aviso('Senha trocada. Use a nova senha a partir de agora.')}return}
+      return drawPin()}
+    if(p.step==='criar'||p.step==='dcriar'){
+      if(p.step==='dcriar'){p.busy=1;p.msg='Verificando…';drawPin();const v=await mget('v');let igual=false;
+        try{await dec(v.chk,await derive(pw,v.salt));igual=true}catch{}p.busy=0;p.msg='';
+        if(igual){p.msg='Use uma senha diferente da principal.';return drawPin()}}
+      p.first=pw;p.step=p.step==='criar'?'confirmar':'dconfirmar'}
+    else if(p.step==='confirmar'||p.step==='dconfirmar'){const d=p.step==='dconfirmar';
+      if(pw!==p.first){p.step=d?'dcriar':'criar';p.msg='As senhas não conferem.'}
+      else{p.busy=1;p.msg=d?'Criando disfarce…':'Protegendo…';drawPin();
+        if(d){await criarSlot(1,pw);await limparDisfarce();S.pin=null;S.vt='aj';await drawVault();
+          return aviso('Senha de disfarce criada. Entre com ela algumas vezes e salve anotações comuns, para esse espaço parecer usado.')}
+        K=await criarSlot(0,pw);await criarSlot(1,rnd());S.slot=0;
+        navigator.storage&&navigator.storage.persist&&navigator.storage.persist();return abrirCofre()}}
+    else{const lk=(await mget('l'))||{n:0,ate:0};
+      if(Date.now()<lk.ate){p.msg='Aguarde '+Math.ceil((lk.ate-Date.now())/1000)+' s.';return drawPin()}
+      p.busy=1;p.msg='Verificando…';drawPin();const v0=await mget('v'),v1=await mget('v1');
+      // testa as duas senhas sempre, para o tempo de resposta não revelar qual abriu
+      const tenta=async v=>{if(!v)return null;try{const key=await derive(pw,v.salt);await dec(v.chk,key);return key}catch{return null}};
+      const [k0,k1]=await Promise.all([tenta(v0),tenta(v1)]);
+      if(k0||k1){K=k0||k1;S.slot=k0?0:1;await mset('l',{n:0,ate:0});if(!v1)await criarSlot(1,rnd());return abrirCofre()}
+      K=null;lk.n++;lk.ate=Date.now()+Math.min(2**lk.n,600)*1000;await mset('l',lk);p.busy=0;p.msg='Senha incorreta.'}}
+  drawPin()}
+const sair=()=>{if(typeof mr!=='undefined'&&mr&&mr.state==='recording'){mr.onstop=null;mr.stop();mr.stream.getTracks().forEach(t=>t.stop())}clearInterval(tmr);rev();K=null;S.vault=false;S.pin=null;S.open=null;S.comp=null;S.slot=0;S.tab='rec';viewApp()};
+// fecha ao trocar de app, exceto enquanto a própria usuária escolhe um arquivo ou compartilha
+document.addEventListener('visibilitychange',()=>{if(document.hidden){if(!S.pick&&(S.vault||S.pin))sair()}else S.pick=0});
+
+/* --- cofre --- */
+async function abrirCofre(){S.vault=true;S.pin=null;S.vt='reg';await ensureChain();await drawVault()}
+const VT=[['reg','🗂','Registros'],['nota','✍️','Anotar'],['aud','🎙','Áudio'],['arq','📎','Arquivos'],['aj','☎️','Ajuda']];
+const tipoN=e=>({nota:'Anotação',audio:'Áudio',arquivo:'Arquivo'}[e.tipo]);
+const difere=e=>e.exif&&Math.abs(new Date(e.exif)-new Date(e.quando))>864e5;
+const exifInfo=e=>e.exif?`<br>📷 foto tirada em ${fmt(e.exif)} (dados da câmera)${difere(e)?' · ⚠ diferente da data informada':''}`:e.mime&&e.mime.startsWith('image')?'<br>📷 sem data da câmera (comum em prints e fotos recebidas)':'';
+async function drawVault(){
+  const t=S.vt;let b='';const GP='<label class="lab"><input type="checkbox" id="gp" style="width:auto;margin-right:6px">Registrar minha localização (opcional)</label>';
+  if(t==='reg'){rev();const l=await allEv(),it=[];S.evs=l;
+    for(const e of l){
+      if(e.apagado){it.push(`<div class="ev tomb"><small>nº ${e.seq} · ${tipoN(e)} · apagado em ${fmt(e.apagado)}</small>Conteúdo apagado. O registro continua na corrente só para mostrar que existiu.</div>`);continue}
+      let m='';
+      if(e.tipo==='nota')m=`<p>${esc(e.texto)}</p>`;else{const u=URL.createObjectURL(await blobOf(e));URLS.push(u);e._u=u;
+        m=(e.texto?`<p>${esc(e.texto)}</p>`:'')+(e.mime.startsWith('audio')?`<audio controls src="${u}"></audio>`:e.mime.startsWith('image')?`<img src="${u}" alt="${esc(e.nome||'imagem')}">`:e.mime.startsWith('video')?`<video controls src="${u}"></video>`:`<p><a href="${u}" download="${esc(e.nome||'arquivo')}">📎 ${esc(e.nome||'arquivo')}</a></p>`)}
+      it.push(`<div class="ev"><small>${e.seq?'nº '+e.seq+' · ':''}${tipoN(e)} · fato informado em ${fmt(e.quando)}<br>registrado em ${fmt(e.criado)} (relógio do aparelho)${e.geo?' · 📍 '+e.geo.lat+', '+e.geo.lon:''}${exifInfo(e)}</small><b>${esc(e.titulo||'')}</b>${m}<small style="margin-top:6px;word-break:break-all">SHA-256: ${e.sha.slice(0,20)}…</small><button class="del" data-c2="${e.id}">Conferir integridade</button> · <button class="del" data-d="${e.id}">Apagar</button></div>`)}
+    const bt=(l.length?'<button class="btn alt" id="rp">Gerar relatório</button><button class="btn alt" id="vf">Verificar corrente</button><button class="btn alt" id="cp">Enviar comprovante</button><button class="btn alt" id="bkp">Backup cifrado</button>':'')+(S.slot===0?'<button class="btn alt" id="rst" style="grid-column:1/-1">Restaurar backup</button>':'');
+    b=`<h2>Registros</h2><div class="note">Tudo é cifrado (AES-256) e só abre com a senha. A “data informada” é a que você digitou; a de registro vem do relógio do aparelho. Cada registro guarda o código do anterior, formando uma corrente: se algo for alterado, removido ou inserido, a verificação mostra.</div>${bt?`<div class="grid2">${bt}</div>`:''}`+(l.length?it.join(''):'<p style="color:var(--soft)">Nada registrado ainda. Use as abas abaixo para guardar conversas, áudios, fotos e outros arquivos.</p>');}
+  else if(t==='comp'){const h=await getHead(),cs=await getComps(),em=new Date().toISOString();
+    S.comp={em,seq:h.seq,link:h.link,txt:`Código de verificação\nGerado em: ${fmt(em)}\nItens: ${h.seq}\nCódigo: ${h.link}\n\nGuarde esta mensagem sem alterar.`};
+    b=`<button class="back" id="vb">← Voltar</button><h2>Comprovante externo</h2><div class="note">Envie este código para uma pessoa de confiança ou para o seu próprio e-mail. Ele não mostra nada do conteúdo, mas resume todos os registros feitos até agora. A mensagem recebida, com a data do WhatsApp ou do e-mail, comprova que esses registros já existiam naquele dia e não foram mudados depois.</div><textarea id="ctx" readonly style="min-height:140px;font-family:monospace;font-size:12.5px">${esc(S.comp.txt)}</textarea><div class="row" style="margin-top:10px">${navigator.share?'<button class="btn" id="csh">Compartilhar</button>':''}<button class="btn alt" id="ccp">Copiar</button></div><h3>Comprovantes já enviados</h3>`+(cs.length?cs.slice().reverse().map(c=>`<div class="ev"><small>${fmt(c.em)} · até o registro nº ${c.seq} · ${c.via}</small><small style="word-break:break-all;font-family:monospace">${c.link}</small></div>`).join(''):'<p style="color:var(--soft);font-size:14px">Nenhum ainda.</p>')}
+  else if(t==='nota')b=`<h2>Anotar o que aconteceu</h2><label class="lab">Quando aconteceu (data informada)</label><input type="datetime-local" id="qd" value="${nowLocal()}"><label class="lab">Título (opcional)</label><input id="tt" placeholder="Ex.: Discussão de sábado"><label class="lab">Relato ou conversa</label><textarea id="tx" placeholder="Descreva o que houve ou cole aqui mensagens recebidas (WhatsApp, SMS, e-mail)."></textarea>${GP}<p style="margin:14px 0 0"><button class="btn" id="sv">Salvar anotação</button></p>`;
+  else if(t==='aud')b=`<h2>Gravar áudio</h2><div class="note">Grave agora ou envie um áudio que você já tenha (por exemplo, um recado de voz recebido). Sair do app interrompe a gravação.</div><button class="rec-btn" id="rb" aria-label="Gravar">🎙</button><p id="rs" style="text-align:center;color:var(--soft);min-height:22px;margin:0 0 12px"></p><label class="lab">Título (opcional)</label><input id="tt" placeholder="Ex.: Ameaça por voz"><label class="lab">Ou envie um arquivo de áudio</label><input type="file" id="fa" accept="audio/*"><p style="margin:14px 0 0"><button class="btn alt" id="sa">Salvar áudio enviado</button></p>`;
+  else if(t==='arq')b=`<h2>Fotos, vídeos e documentos</h2><div class="note">Prints de conversas, fotos de lesões ou danos, vídeos, laudos e comprovantes. Se a foto tiver a data da câmera, ela aparece junto das outras datas.</div><label class="lab">Quando aconteceu (data informada)</label><input type="datetime-local" id="qd" value="${nowLocal()}"><label class="lab">Título (opcional)</label><input id="tt" placeholder="Ex.: Print da mensagem de ontem"><label class="lab">Observação (opcional)</label><input id="tx" placeholder="O que este arquivo mostra"><label class="lab">Arquivos</label><input type="file" id="fl" multiple accept="image/*,video/*,application/pdf,audio/*">${GP}<p style="margin:14px 0 0"><button class="btn" id="sf">Salvar arquivos</button></p>`;
+  else b=`<h2>Ajuda</h2><div class="note">Se você está em perigo agora, ligue 190. Para sair rápido: botão “Sair”, toque duas vezes no cabeçalho ou troque de aplicativo. O espaço seguro se fecha sozinho.</div>${[['📞','Ligue 180','Central de Atendimento à Mulher, 24 h, gratuita e com atendimento em todo o país.','tel:180'],['🚓','Ligue 190','Polícia Militar, em caso de emergência.','tel:190']].map(([i,n,d,h])=>`<a class="rec" href="${h}" style="text-decoration:none"><span class="emo">${i}</span><span><b>${n}</b><small>${d}</small></span></a>`).join('')}<h3>Importante</h3><ul style="font-size:14px;color:var(--soft)"><li>Você não precisa ter provas para denunciar nem para pedir medida protetiva: a sua palavra tem peso.</li><li>Procure a Delegacia da Mulher ou a Defensoria Pública.</li><li>Envie cópias das evidências a uma pessoa de confiança e não guarde a senha em local visível.</li></ul><h3>Senha</h3><p style="color:var(--soft);font-size:14px;line-height:1.5;margin:0 0 10px">Se você acha que alguém viu sua senha, troque agora. Os registros continuam aqui.</p><button class="btn alt" id="ts">Trocar senha</button>`+(S.slot===0?`<h3>Senha de disfarce</h3><p style="color:var(--soft);font-size:14px;line-height:1.5;margin:0 0 10px">Se alguém obrigar você a abrir o espaço seguro, digite a senha de disfarce. Ela abre um espaço parecido, com outras anotações, e os registros verdadeiros continuam escondidos. Olhando o aparelho, não dá para saber que existe um segundo espaço.</p><button class="btn alt" id="dz">Definir senha de disfarce</button><p style="color:var(--soft);font-size:12.5px">Se já existir uma, ela será trocada e as anotações do disfarce serão apagadas.</p>`:'');
+  P.className='vault';
+  P.innerHTML=`<header><div class="logo"><i>🔒</i>Espaço seguro</div><button class="exit" id="x">Sair</button></header><main>${b}</main><nav>${VT.map(([k,i,l])=>`<button data-v="${k}" class="${t===k?'on':''}"><b>${i}</b>${l}</button>`).join('')}</nav>`;
+  $('#x').onclick=sair;$('header').ondblclick=sair;
+  P.querySelectorAll('[data-v]').forEach(x=>x.onclick=()=>{S.vt=x.dataset.v;drawVault()});
+  P.querySelectorAll('input[type=file]').forEach(i=>i.addEventListener('click',()=>{S.pick=1}));
+  P.querySelectorAll('[data-d]').forEach(x=>x.onclick=async()=>{const e=S.evs.find(y=>String(y.id)===x.dataset.d);if(await confirmar('Apagar o conteúdo deste registro? Não é possível desfazer. Fica só um aviso de “registro apagado”, para a corrente continuar íntegra.','Apagar')){await delEv(e);drawVault()}});
+  P.querySelectorAll('[data-c2]').forEach(x=>x.onclick=async()=>{const e=S.evs.find(y=>String(y.id)===x.dataset.c2),buf=e._b?await dec(e._b):te.encode(e.texto||'');aviso(await sha(buf)===e.sha?'Íntegro: o conteúdo é idêntico ao que foi salvo.':'ATENÇÃO: o conteúdo não confere com o salvo.')});
+  const q=id=>{const e=$(id);return e?e.value:''},qd=()=>q('#qd')?new Date(q('#qd')).toISOString():new Date().toISOString();
+  const g=async()=>$('#gp')&&$('#gp').checked?await geo():null;
+  const ok=m=>{S.vt='reg';drawVault().then(()=>aviso(m))};
+  if($('#rp'))$('#rp').onclick=relatorio;if($('#bkp'))$('#bkp').onclick=backup;if($('#rst'))$('#rst').onclick=escolherBackup;
+  if($('#cp'))$('#cp').onclick=()=>{S.vt='comp';drawVault()};
+  if($('#vb'))$('#vb').onclick=()=>{S.vt='reg';drawVault()};
+  if($('#vf'))$('#vf').onclick=async()=>{const r=await verificar(S.evs);aviso(r.ok?`Corrente íntegra: ${r.n} registro(s) em sequência, sem alterações, remoções ou inserções.`:'ATENÇÃO:\n• '+r.pb.join('\n• '))};
+  if($('#ts'))$('#ts').onclick=()=>{S.pin={buf:'',step:'tatual',first:'',msg:''};drawPin()};
+  if($('#dz'))$('#dz').onclick=()=>{S.pin={buf:'',step:'dcriar',first:'',msg:''};drawPin()};
+  if($('#csh'))$('#csh').onclick=async()=>{S.pick=1;try{await navigator.share({text:S.comp.txt});await registrarComp('compartilhado')}catch(e){S.pick=0;if(e.name!=='AbortError')$('#ccp').click()}};
+  if($('#ccp'))$('#ccp').onclick=async()=>{let ok=false;try{await navigator.clipboard.writeText(S.comp.txt);ok=true}catch{const a=$('#ctx');a.select();try{ok=document.execCommand('copy')}catch{}}
+    if(ok){await registrarComp('copiado');aviso('Copiado. Cole numa conversa com alguém de confiança ou no seu e-mail.')}else aviso('Não foi possível copiar. Selecione o texto e copie manualmente.')};
+  if($('#sv'))$('#sv').onclick=async()=>{if(!q('#tx').trim())return aviso('Escreva o relato antes de salvar.');await addEv({tipo:'nota',titulo:q('#tt'),texto:q('#tx'),quando:qd(),geo:await g()});ok('Anotação salva.')};
+  if($('#sf'))$('#sf').onclick=async()=>{const fs=[...$('#fl').files];if(!fs.length)return aviso('Escolha ao menos um arquivo.');const gg=await g();for(const f of fs)await addEv({tipo:'arquivo',titulo:q('#tt'),texto:q('#tx'),nome:f.name,mime:f.type||'application/octet-stream',blob:f,quando:qd(),geo:gg});ok('Arquivo(s) salvo(s).')};
+  if($('#sa'))$('#sa').onclick=async()=>{const f=$('#fa').files[0];if(!f)return aviso('Escolha um arquivo de áudio.');await addEv({tipo:'audio',titulo:q('#tt'),nome:f.name,mime:f.type||'audio/mpeg',blob:f,quando:new Date().toISOString()});ok('Áudio salvo.')};
+  if($('#rb'))gravador();
+}
+const trocarSenha=pw=>serial(async()=>{const s=S.slot,old=K,salt=crypto.getRandomValues(new Uint8Array(16)),nk=await derive(pw,salt);
+  const r=await tx('ev','readonly',x=>x.getAll()),out=[];
+  for(const x of r){let m;try{m=await dec(x.m,old)}catch{continue}
+    out.push({id:x.id,m:await enc(m,nk),b:x.b?await enc(await dec(x.b,old),nk):null})}
+  const h=await mget('h'+s),c=await mget('c'+s),v={salt,chk:await enc(te.encode('ok'),nk)};
+  const h2=h?await enc(await dec(h,old),nk):null,c2=c?await enc(await dec(c,old),nk):null;
+  await txAll((se,sm)=>{out.forEach(o=>se.put(o));sm.put(v,VK(s));if(h2)sm.put(h2,'h'+s);if(c2)sm.put(c2,'c'+s)});
+  if(K===old)K=nk});
+async function registrarComp(via){const c=S.comp;if(!c||!c.seq)return;await addComp({em:c.em,seq:c.seq,link:c.link,via});if(S.vault&&S.vt==='comp')drawVault()}
+async function relatorio(){const l=S.evs,vr=await verificar(l),cs=await getComps(),sm='font-family:monospace;word-break:break-all';
+  const h=[...l].sort((a,b)=>(a.seq||0)-(b.seq||0)).map(e=>`<div style="break-inside:avoid;border-bottom:1px solid #999;padding:8px 0">`+(e.apagado?`<b>nº ${e.seq}. Registro apagado</b><br>Apagado em ${fmt(e.apagado)}. O conteúdo foi removido pela usuária; o código foi mantido para mostrar que o registro existiu.<br>`:`<b>${e.seq?'nº '+e.seq+'. ':''}${esc(e.titulo||tipoN(e))}</b><br>Fato informado em: ${fmt(e.quando)} · Registrado em: ${fmt(e.criado)}${e.geo?' · Local: '+e.geo.lat+', '+e.geo.lon:''}${e.exif?'<br>Data da câmera (EXIF): '+fmt(e.exif)+(difere(e)?' — diferente da data informada':''):''}<br>${e.texto?'<span style="white-space:pre-wrap">'+esc(e.texto)+'</span><br>':''}${e.nome?'Arquivo: '+esc(e.nome)+' ('+e.n+' bytes)<br>':''}${e._u&&e.mime.startsWith('image')?`<img src="${e._u}" style="max-width:220px;max-height:160px"><br>`:''}<small style="${sm}">SHA-256 do conteúdo: ${e.sha}</small><br>`)+(e.link?`<small style="${sm}">Código na corrente: ${e.link}</small>`:'')+'</div>').join('');
+  const st=vr.ok?`<p><b>Verificação da corrente: íntegra.</b> ${vr.n} registro(s) em sequência, sem alterações, remoções ou inserções detectadas.</p>`:`<p><b>Verificação da corrente: PROBLEMAS ENCONTRADOS.</b></p><ul>${vr.pb.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+  const ct=cs.length?`<h2>Comprovantes enviados a terceiros</h2><p>Compare com as mensagens recebidas por essas pessoas: se o código confere, os registros até aquele número já existiam na data da mensagem.</p><ul>${cs.map(c=>`<li>${fmt(c.em)} (${c.via}) — até o nº ${c.seq} — <span style="${sm}">${c.link}</span></li>`).join('')}</ul>`:'';
+  const d=document.createElement('div');d.id='prt';d.innerHTML=`<h1>Relatório de registros</h1><p>Gerado em ${fmt(new Date())}. As datas de registro vêm do relógio do aparelho. O código SHA-256 permite conferir se cada conteúdo foi alterado, e o código na corrente liga cada registro ao anterior. A validade como prova depende da avaliação da autoridade competente. Para salvar em PDF, escolha “Salvar como PDF” na impressão.</p>${st}${ct}<h2>Registros</h2>${h}`;
+  document.body.appendChild(d);window.onafterprint=()=>d.remove();setTimeout(()=>window.print(),300)}
+async function backup(){const r=await tx('ev','readonly',s=>s.getAll()),ks=await tx('m','readonly',s=>s.getAllKeys()),meta={};
+  for(const k of ks)if(k!=='l')meta[k]=await mget(k);
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({fmt:2,meta:ser(meta),ev:ser(r)})],{type:'application/json'}));a.download='cache-'+Date.now()+'.json';
+  document.body.appendChild(a);S.pick=1;a.click();a.remove();setTimeout(()=>{URL.revokeObjectURL(a.href);S.pick=0},3000)}
+function escolherBackup(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';S.pick=1;
+  i.onchange=async()=>{S.pick=0;const f=i.files[0];if(!f)return;let j,meta,ev;
+    try{j=JSON.parse(await f.text());
+      if(j.fmt===2){meta=deser(j.meta);ev=deser(j.ev)}
+      else if(j.v&&j.ev){const c=o=>o&&{iv:unb64(o.iv),ct:unb64(o.ct)};meta={v:{salt:unb64(j.v.salt),chk:c(j.v.chk)}};ev=j.ev.map(x=>({id:x.id,m:c(x.m),b:c(x.b)}))}}catch{}
+    if(!meta||!meta.v||!Array.isArray(ev))return aviso('Este arquivo não é um backup válido.');
+    if(!await confirmar(`Restaurar backup com ${ev.length} item(ns)? O que está neste aparelho será substituído, e a senha passa a ser a do backup.`,'Restaurar'))return;
+    const lk=await mget('l');
+    await txAll((se,sm)=>{se.clear();sm.clear();ev.forEach(x=>se.put(x));Object.entries(meta).forEach(([k,v])=>sm.put(v,k));if(lk)sm.put(lk,'l')});
+    sair();await pinScreen();S.pin.msg='Backup restaurado. Digite a senha do backup.';drawPin()};
+  i.click()}
+
+let mr,ch,tmr;
+function gravador(){
+  const rb=$('#rb'),rs=$('#rs');
+  rb.onclick=async()=>{
+    if(mr&&mr.state==='recording'){mr.stop();return}
+    try{const st=await navigator.mediaDevices.getUserMedia({audio:true});ch=[];mr=new MediaRecorder(st);
+      mr.ondataavailable=e=>ch.push(e.data);
+      mr.onstop=async()=>{clearInterval(tmr);st.getTracks().forEach(t=>t.stop());if(!S.vault)return;const bl=new Blob(ch,{type:mr.mimeType||'audio/webm'});
+        await addEv({tipo:'audio',titulo:($('#tt')||{}).value||'',nome:'gravacao',mime:bl.type,blob:bl,quando:new Date().toISOString()});S.vt='reg';await drawVault();aviso('Áudio salvo.')};
+      mr.start();rb.classList.add('on');rb.textContent='⏹';let s=0;rs.textContent='Gravando… 0 s. Toque para parar.';tmr=setInterval(()=>rs.textContent='Gravando… '+(++s)+' s. Toque para parar.',1000)}
+    catch(e){rs.textContent='Sem acesso ao microfone. Permita o acesso ou envie um arquivo abaixo.'}
+  };
+}
+idb().then(viewApp);if('serviceWorker'in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
